@@ -133,7 +133,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.0</version>
 				<configuration>
-					<tagBase>https://crawljax.googlecode.com/svn/tags</tagBase>
+					<tagBase>https://crawljax-plugins.googlecode.com/svn/tags</tagBase>
 				</configuration>
 			</plugin>
 
@@ -152,9 +152,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:http://crawljax.googlecode.com/svn/tags/webscarabwrapper-1.0</connection>
-		<developerConnection>scm:svn:https://crawljax.googlecode.com/svn/tags/webscarabwrapper-1.0</developerConnection>
-		<url>http://crawljax.googlecode.com/svn/tags/webscarabwrapper-1.0</url>
+		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/tags/webscarabwrapper-1.0</connection>
+		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/tags/webscarabwrapper-1.0</developerConnection>
+		<url>http://crawljax-plugins.googlecode.com/svn/tags/webscarabwrapper-1.0</url>
 	</scm>
 	
 	<licenses>
