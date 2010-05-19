@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.crawljax.plugins</groupId>
 	<artifactId>webscarabwrapper</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Extendible proxy server</name>
 	<description>
 		This proxy server is extendible and allows you to modify requests and responses.
@@ -36,7 +35,7 @@
 		<dependency>
 		 <groupId>com.crawljax</groupId>
 		 <artifactId>crawljax</artifactId>
-		 <version>[1.8,]</version>
+		 <version>1.9</version>
 		 <type>jar</type>
 		</dependency>
 
@@ -153,9 +152,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</connection>
-		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</developerConnection>
-		<url>http://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</url>
+		<connection>scm:svn:http://crawljax.googlecode.com/svn/tags/webscarabwrapper-1.0</connection>
+		<developerConnection>scm:svn:https://crawljax.googlecode.com/svn/tags/webscarabwrapper-1.0</developerConnection>
+		<url>http://crawljax.googlecode.com/svn/tags/webscarabwrapper-1.0</url>
 	</scm>
 	
 	<licenses>
