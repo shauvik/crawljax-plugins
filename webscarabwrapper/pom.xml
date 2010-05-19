@@ -3,7 +3,7 @@
 	<groupId>com.crawljax.plugins</groupId>
 	<artifactId>webscarabwrapper</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<name>Extendible proxy server</name>
 	<description>
 		This proxy server is extendible and allows you to modify requests and responses.
@@ -152,9 +152,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/tags/webscarabwrapper-1.0</connection>
-		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/tags/webscarabwrapper-1.0</developerConnection>
-		<url>http://crawljax-plugins.googlecode.com/svn/tags/webscarabwrapper-1.0</url>
+		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</connection>
+		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</developerConnection>
+		<url>http://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</url>
 	</scm>
 	
 	<licenses>
