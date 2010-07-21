@@ -3,7 +3,7 @@
 	<groupId>com.crawljax.plugins</groupId>
 	<artifactId>crawloverview</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Crawl Overview</name>
 	<description>
 		Generates a HTML report with an overview from what is crawled.
@@ -150,9 +150,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/trunk/crawloverview</connection>
-		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/trunk/crawloverview</developerConnection>
-		<url>http://crawljax-plugins.googlecode.com/svn/trunk/crawloverview</url>
+		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/tags/crawloverview-1.0</connection>
+		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/tags/crawloverview-1.0</developerConnection>
+		<url>http://crawljax-plugins.googlecode.com/svn/tags/crawloverview-1.0</url>
 	</scm>
 	
 	<licenses>
