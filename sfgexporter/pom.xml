@@ -6,33 +6,40 @@
     <artifactId>crawljax-plugins-parent</artifactId>
     <version>2.0-SNAPSHOT</version>
   </parent>
-	<artifactId>benchmark</artifactId>
+	<artifactId>sfgexporter</artifactId>
 	<packaging>jar</packaging>
-	<name>Benchmark</name>
+	<version>2.0-SNAPSHOT</version>
+	<name>SFGExporter</name>
 	<description>
-		Make graphs of the running time, used memory, duplicate states.
+		Export the state flow graph in one of the following
+		formats:
+		DOT
+			PNG
+			PDF
+			PS
+			Many, Many, Many More
+		Gml
+		GraphML
+		Matrix
+		Visio
 	</description>
-	<url>http://crawljax.com/plugins/plugin-benchmark/</url>
-	<inceptionYear>2009-2010</inceptionYear>
+	<url>http://crawljax.com/plugins/sfgexporter-plugin/</url>
+	<inceptionYear>2010</inceptionYear>
 
 	<developers>
 		<developer>
 			<id>stefan</id>
 		</developer>
+    <developer>
+      <id>ali</id>
+    </developer>
 	</developers>
 
 	<dependencies>
 		<dependency>
-			<groupId>classmexer</groupId>
-			<artifactId>classmexer</artifactId>
-			<version>0.03</version>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-jdk1.5</artifactId>
+			<version>0.7.3</version>
 		</dependency>
-
-		<dependency>
-			<groupId>javaplot</groupId>
-			<artifactId>javaplot</artifactId>
-			<version>0.4.0</version>
-		</dependency>
-
 	</dependencies>
 </project>

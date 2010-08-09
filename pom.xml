@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.crawljax.plugins</groupId>
+	<artifactId>crawljax-plugins-parent</artifactId>
+	<version>2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>crawljax-plugins-parent</name>
+	<description>Plugins to be used in combination with the Crawljax core</description>
+	<url>http://crawljax-plugins.googlecode.com/</url>
+	<inceptionYear>2009</inceptionYear>
+	<organization>
+		<name>Delft University of Technology</name>
+		<url>http://spci.st.ewi.tudelft.nl</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>GNU General Public License v3</name>
+			<url>http://www.gnu.org/licenses/gpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn</connection>
+		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn</developerConnection>
+		<url>http://crawljax-plugins.googlecode.com/svn</url>
+	</scm>
+	<developers>
+		<developer>
+			<id>amesbah</id>
+			<name>Ali Mesbah</name>
+			<email>a.mesbah@gmail.com</email>
+			<url>http://www.st.ewi.tudelft.nl/~mesbah/</url>
+			<organization>SWERL, TU Delft</organization>
+			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>dannyroest</id>
+			<name>Danny Roest</name>
+			<email>dannyroest@gmail.com</email>
+			<url>http://twitter.com/dannyroest</url>
+			<organization>SWERL, TU Delft</organization>
+			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>frankgroeneveld</id>
+			<name>Frank Groeneveld</name>
+			<email>frankgroeneveld@gmail.com</email>
+			<url>http://techfield.org/</url>
+			<organization>SWERL, TU Delft</organization>
+			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>lenselinkstefan</id>
+			<name>Stefan Lenselink</name>
+			<email>S.R.Lenselink@student.tudelft.nl</email>
+			<url>http://bu130.nl</url>
+			<organization>SWERL, TU Delft</organization>
+			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>arie.van.deursen</id>
+			<name>Arie van Deursen</name>
+			<email>arie.vanDeursen@tudelft.nl</email>
+			<url>http://www.st.ewi.tudelft.nl/~arie/</url>
+			<organization>SWERL, TU Delft</organization>
+			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <!-- When creating a new plugin, add the directory/plugin-name here -->
+	<modules>
+		<module>crawloverview</module>
+    <module>webscarabwrapper</module>
+    <module>benchmark</module>
+    <module>sfgexporter</module>
+	</modules>
+
+  <!-- All plugins have the following dependencies -->
+	<dependencies>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.crawljax</groupId>
+			<artifactId>crawljax</artifactId>
+			<!-- TODO Whould like to have: <version>${project.version}</version> -->
+      <!-- But it breaks webscarabwrapper -->
+      <version>2.0-SNAPSHOT</version>
+			<classifier>binary</classifier>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+  <!-- Default the issues for a plugin are reported @googelcode -->
+  <!-- If a Plugin have a different location the plugin pom must specify -->
+	<issueManagement>
+		<system>Google Code</system>
+		<url>https://code.google.com/p/crawljax-plugins/issues/list</url>
+	</issueManagement>
+
+  <!-- Default the location of the mailling list for a plugin -->
+  <!-- If a Plugin have a different mailinglist the plugin pom must specify -->
+	<mailingLists>
+		<mailingList>
+			<name>Crawljax Mailing List</name>
+			<subscribe>http://groups.google.com/group/crawljax/subscribe</subscribe>
+			<unsubscribe>crawljax+unsubscribe@googlegroups.com</unsubscribe>
+			<post>crawljax@googlegroups.com</post>
+			<archive>http://groups.google.com/group/crawljax</archive>
+		</mailingList>
+	</mailingLists>
+
+  <build>
+  
+    <!-- Default Setup per plugin, is plugin needs a different setup it must -->
+    <!-- Specify it in its own pom -->
+    <directory>target</directory>
+    <outputDirectory>target/classes</outputDirectory>
+    <finalName>${artifactId}-${version}</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+  
+    <plugins>
+    
+      <!-- Default JDK dependency -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+      </plugin>
+      
+      <!-- Plugin used to create eclipse .project files -->
+      <!-- Invoke: mvn eclipse:eclipse -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <useProjectReferences>false</useProjectReferences>
+        </configuration>
+      </plugin>
+      
+       <!-- Create PLUGIN_NAME-x.y.jar (binary only) -->
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+
+      <!-- Create PLUGIN_NAME-x.y-sources.jar (source only) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- Control the JavaDoc Generation -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <show>private</show>
+          <nohelp>false</nohelp>
+        </configuration>
+      </plugin>
+      
+      <!-- When doing release generate announcement for all plugins -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>announcement-generate</id>
+            <phase>release</phase>
+            <goals>
+              <goal>announcement-generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- Where to publish the plugin to? -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0</version>
+        <configuration>
+          <tagBase>https://crawljax-plugins.googlecode.com/svn/tags</tagBase>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build> 
+</project>

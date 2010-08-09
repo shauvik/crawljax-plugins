@@ -1,182 +1,61 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.crawljax.plugins</groupId>
-	<artifactId>crawloverview</artifactId>
-	<packaging>jar</packaging>
-	<version>1.1-SNAPSHOT</version>
-	<name>Crawl Overview</name>
-	<description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.crawljax.plugins</groupId>
+    <artifactId>crawljax-plugins-parent</artifactId>
+    <version>2.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>crawloverview</artifactId>
+  <name>Crawl Overview</name>
+  <packaging>jar</packaging>
+  <description>
 		Generates a HTML report with an overview from what is crawled.
 	</description>
-	<url>http://spci.st.ewi.tudelft.nl/crawljax/</url>
-	<inceptionYear>2009</inceptionYear>
-	<organization>
-		<name>Delft University of Technology</name>
-		<url>http://spci.st.ewi.tudelft.nl</url>
-	</organization>
-	<developers>
-		<developer>
-			<id>danny</id>
-			<name>Danny Roest</name>
-			<email>dannyroest@gmail.com</email>
-			<url>www.twitter.com/dannyroest</url>
-			<organization>SWERL, TU Delft</organization>
-			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-	</developers>
 
-	<dependencies>
-	
-		<dependency>
-		 <groupId>com.crawljax</groupId>
-		 <artifactId>crawljax</artifactId>
-		 <version>1.9</version>
-		 <type>jar</type>
-		</dependency>
-		
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-			<version>1.5</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.5</version>
-		</dependency>
-	
-	</dependencies>
+  <dependencies>
 
-	<build>
-		<directory>target</directory>
-		<outputDirectory>target/classes</outputDirectory>
-		<finalName>${artifactId}-${version}</finalName>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
-		<testOutputDirectory>target/test-classes</testOutputDirectory>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>.</directory>
-				<includes>
-					<include>*.vm</include>
-					<include>*.js</include>
-				</includes>
-			</resource>
-		</resources>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.5</version>
+    </dependency>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
+  </dependencies>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.7</version>
-				 <configuration>
-                    <useProjectReferences>false</useProjectReferences>
-                 </configuration>
-			</plugin>
+  <build>
+    <resources>
+      <resource>
+        <directory>.</directory>
+        <includes>
+          <include>*.vm</include>
+          <include>*.js</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-changes-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>announcement-generate</id>
-						<phase>package</phase>
-						<goals>
-							<goal>announcement-generate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/resources/jar-with-dependencies.xml</descriptor>
+          </descriptors>
+          <outputDirectory>target</outputDirectory>
+          <workDirectory>target/assembly/work</workDirectory>
+        </configuration>
+      </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>
-							src/main/resources/jar-with-dependencies.xml
-						</descriptor>
-					</descriptors>
-					<outputDirectory>target</outputDirectory>
-					<workDirectory>target/assembly/work</workDirectory>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.0</version>
-				<configuration>
-					<tagBase>https://crawljax-plugins.googlecode.com/svn/tags</tagBase>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<show>private</show>
-					<nohelp>false</nohelp>
-				</configuration>
-			</plugin>
-
-
-		</plugins>
-	</build>
-
-	<scm>
-		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/trunk/crawloverview</connection>
-		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/trunk/crawloverview</developerConnection>
-		<url>http://crawljax-plugins.googlecode.com/svn/trunk/crawloverview</url>
-	</scm>
-	
-	<licenses>
-		<license>
-			<name>GPL v3</name>
-			<url>LICENSE.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	
-	<issueManagement>
-		<system>Google Code</system>
-		<url>https://code.google.com/p/crawljax-plugins/issues/list</url>
-	</issueManagement>
-	
-		<mailingLists>
-		<mailingList>
-			<name>Crawljax Mailing List</name>
-			<subscribe>http://groups.google.com/group/crawljax/subscribe</subscribe>
-			<unsubscribe>crawljax+unsubscribe@googlegroups.com</unsubscribe>
-			<post>crawljax@googlegroups.com</post>
-			<archive>http://groups.google.com/group/crawljax</archive>
-		</mailingList>
-	</mailingLists>
-	
-
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0</version>
+        <configuration>
+          <tagBase>https://crawljax-plugins.googlecode.com/svn/tags</tagBase>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
