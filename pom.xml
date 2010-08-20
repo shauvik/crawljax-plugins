@@ -87,6 +87,7 @@
     <module>webscarabwrapper</module>
     <module>benchmark</module>
     <module>sfgexporter</module>
+    <module>errorreport</module>
 	</modules>
 
   <!-- All plugins have the following dependencies -->
