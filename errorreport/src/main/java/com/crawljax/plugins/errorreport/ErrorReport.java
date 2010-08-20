@@ -11,6 +11,8 @@
  */
 package com.crawljax.plugins.errorreport;
 
+import com.google.common.collect.Lists;
+
 import com.crawljax.browser.EmbeddedBrowser;
 import com.crawljax.condition.invariant.Invariant;
 import com.crawljax.core.CrawlSession;
@@ -76,9 +78,6 @@ public class ErrorReport implements PostCrawlingPlugin {
 
 	private final String title;
 
-	@Deprecated
-	private EmbeddedBrowser browser;
-
 	private final Map<String, ReportErrorList> reportErrors =
 	        new HashMap<String, ReportErrorList>();
 
@@ -87,6 +86,8 @@ public class ErrorReport implements PostCrawlingPlugin {
 	// counter for unique id error
 	private AtomicInteger indexError = new AtomicInteger(1);
 
+	private final List<String> filterAttributes;
+	
 	/**
 	 * Creates a new ErrorReport objects and created the needed folders.
 	 *
@@ -106,7 +107,22 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *            folder to use for output
 	 */
 	public ErrorReport(String title, String outputFolderName) {
+		this(title, outputFolderName, Lists.<String> newArrayList());
+	}
+	
+	/**
+	 * Creates a new ErrorReport objects and created the needed folders.
+	 *
+	 * @param title
+	 *            the title of the report and is also used as folder name
+	 * @param outputFolderName
+	 *            folder to use for output
+	 * @param filterAttributes
+	 *            the dom element attributes to exclude during generation of the Report.
+	 */
+	public ErrorReport(String title, String outputFolderName, List<String> filterAttributes) {
 		this.title = title;
+		this.filterAttributes = filterAttributes;
 		if (outputFolderName == null) {
 			this.outputFolder = title;
 		} else {
@@ -118,34 +134,6 @@ public class ErrorReport implements PostCrawlingPlugin {
 
 		this.report = new File(outputFolder + "/" + MAIN_HTML);
 		generateNeededFilesAndFolders();
-	}
-
-	/**
-	 * Creates a new ErrorReport objects and created the needed folders.
-	 *
-	 * @param title
-	 *            the title of the report and is also used as folder name
-	 * @param browser
-	 *            the current browser instance
-	 * @param outputFolderName
-	 *            folder to use for output
-	 * @deprecated use {@link #ErrorReport(String, String)}
-	 */
-	@Deprecated
-	public ErrorReport(String title, EmbeddedBrowser browser, String outputFolderName) {
-		this(title, outputFolderName);
-		this.browser = browser;
-	}
-
-	/**
-	 * Sets the browser.
-	 *
-	 * @param browser
-	 *            the browser instance to use.
-	 */
-	@Deprecated
-	public void setBrowser(EmbeddedBrowser browser) {
-		this.browser = browser;
 	}
 
 	/**
@@ -184,37 +172,11 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *
 	 * @param invariant
 	 *            the violated invariant
-	 * @deprecated use {@link #addInvariantViolation(Invariant, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addInvariantViolation(Invariant invariant) {
-		addInvariantViolation(invariant, this.browser);
-	}
-
-	/**
-	 * Adds the violated invariant to the report.
-	 *
-	 * @param invariant
-	 *            the violated invariant
 	 * @param browser
 	 *            the browser used
 	 */
 	public void addInvariantViolation(Invariant invariant, EmbeddedBrowser browser) {
 		addInvariantViolation(invariant, new ArrayList<Eventable>(), browser);
-	}
-
-	/**
-	 * Adds the violated invariant to the report.
-	 *
-	 * @param invariant
-	 *            the violated invariant
-	 * @param pathToFailure
-	 *            the fired Eventables before the violation
-	 * @deprecated use {@link #addInvariantViolation(Invariant, List, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addInvariantViolation(Invariant invariant, List<Eventable> pathToFailure) {
-		addInvariantViolation(invariant, pathToFailure, this.browser);
 	}
 
 	/**
@@ -238,37 +200,11 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *
 	 * @param eventable
 	 *            the Eventable that could not be fired
-	 * @deprecated use {@link #addEventFailure(Eventable, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addEventFailure(Eventable eventable) {
-		addEventFailure(eventable, null, new ArrayList<Eventable>());
-	}
-	
-	/**
-	 * Adds the Eventable that could not be fired to the report.
-	 *
-	 * @param eventable
-	 *            the Eventable that could not be fired
 	 * @param browser
 	 *            the browser used
 	 */
 	public void addEventFailure(Eventable eventable, EmbeddedBrowser browser) {
 		addEventFailure(eventable, null, new ArrayList<Eventable>(), browser);
-	}
-
-	/**
-	 * Adds the Eventable that could not be fired to the report.
-	 *
-	 * @param eventable
-	 *            the Eventable that could not be fired
-	 * @param pathToFailure
-	 *            the fired Eventables before the failure
-	 * @deprecated use {@link #addEventFailure(Eventable, List, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addEventFailure(Eventable eventable, List<Eventable> pathToFailure) {
-		addEventFailure(eventable, null, pathToFailure);
 	}
 
 	/**
@@ -293,43 +229,12 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *            the Eventable that could not be fired
 	 * @param originalState
 	 *            the state in which the Eventable was originally fired
-	 * @deprecated use {@link #addEventFailure(Eventable, StateVertix, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addEventFailure(Eventable eventable, StateVertix originalState) {
-		addEventFailure(eventable, originalState, this.browser);
-	}
-
-	/**
-	 * Adds the Eventable that could not be fired to the report.
-	 *
-	 * @param eventable
-	 *            the Eventable that could not be fired
-	 * @param originalState
-	 *            the state in which the Eventable was originally fired
 	 * @param browser
 	 *            the browser used
 	 */
 	public void addEventFailure(
 	        Eventable eventable, StateVertix originalState, EmbeddedBrowser browser) {
 		addEventFailure(eventable, originalState, new ArrayList<Eventable>(), browser);
-	}
-
-	/**
-	 * Adds the Eventable that could not be fired to the report.
-	 *
-	 * @param eventable
-	 *            the Eventable that could not be fired
-	 * @param originalState
-	 *            the state in which the Eventable was originally fired
-	 * @param pathToFailure
-	 *            the fired Eventables before the failure
-	 * @deprecated use {@link #addEventFailure(Eventable, StateVertix, List, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addEventFailure(
-	        Eventable eventable, StateVertix originalState, List<Eventable> pathToFailure) {
-		addEventFailure(eventable, originalState, pathToFailure, this.browser);
 	}
 
 	/**
@@ -361,22 +266,6 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *
 	 * @param originalState
 	 *            the state to compare with
-	 * @deprecated use {@link #addStateFailure(StateVertix, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addStateFailure(StateVertix originalState) {
-		try {
-			addStateFailure(browser.getDom(), originalState, new ArrayList<Eventable>());
-		} catch (CrawljaxException e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * Adds a state failure which is a difference between two states.
-	 *
-	 * @param originalState
-	 *            the state to compare with
 	 * @param browser
 	 *            the browser used
 	 */
@@ -386,20 +275,6 @@ public class ErrorReport implements PostCrawlingPlugin {
 		} catch (CrawljaxException e) {
 			LOGGER.error("Unable to retrieve DOM from Browser", e);
 		}
-	}
-
-	/**
-	 * Adds a state failure which is a difference between two states.
-	 *
-	 * @param currentDom
-	 *            the current DOM which is used instead Browser.getDom()
-	 * @param originalState
-	 *            the state to compare with
-	 * @deprecated use {@link #addStateFailure(String, StateVertix, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addStateFailure(String currentDom, StateVertix originalState) {
-			addStateFailure(currentDom, originalState, this.browser);
 	}
 
 	/**
@@ -420,42 +295,6 @@ public class ErrorReport implements PostCrawlingPlugin {
 	/**
 	 * Adds a state failure which is a difference between two states.
 	 *
-	 * @param originalState
-	 *            the state to compare with
-	 * @param pathToFailure
-	 *            the fired Eventables before the failure
-	 * @deprecated use {@link #addStateFailure(String, StateVertix, List)}
-	 */
-	@Deprecated
-	public void addStateFailure(StateVertix originalState, List<Eventable> pathToFailure) {
-		try {
-			addStateFailure(browser.getDom(), originalState, new ArrayList<Eventable>());
-		} catch (CrawljaxException e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-
-	}
-
-	/**
-	 * Adds a state failure which is a difference between two states.
-	 *
-	 * @param currentDom
-	 *            the current DOM which is used instead Browser.getDom()
-	 * @param originalState
-	 *            the state to compare with
-	 * @param pathToFailure
-	 *            the fired Eventables before the failure
-	 * @deprecated use {@link #addStateFailure(String, StateVertix, List, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addStateFailure(
-	        String currentDom, StateVertix originalState, List<Eventable> pathToFailure) {
-		addStateFailure(currentDom, originalState, pathToFailure, this.browser);
-	}
-
-	/**
-	 * Adds a state failure which is a difference between two states.
-	 *
 	 * @param currentDom
 	 *            the current DOM which is used instead Browser.getDom()
 	 * @param originalState
@@ -468,7 +307,8 @@ public class ErrorReport implements PostCrawlingPlugin {
 	public void addStateFailure(String currentDom, StateVertix originalState,
 	        List<Eventable> pathToFailure, EmbeddedBrowser browser) {
 
-		List<Difference> differences = Helper.getDifferences(currentDom, originalState.getDom());
+		List<Difference> differences =
+		        Helper.getDifferences(currentDom, originalState.getDom(), filterAttributes);
 		List<Highlight> highlights = new ArrayList<Highlight>();
 		for (Difference difference : differences) {
 			highlights.add(new Highlight(StringEscapeUtils.escapeHtml(difference.toString()),
@@ -481,18 +321,6 @@ public class ErrorReport implements PostCrawlingPlugin {
 		        .includeOriginalState(originalState).useDomInSteadOfBrowserDom(currentDom),
 		        browser);
 
-	}
-
-	/**
-	 * Adds a reportError to the ErrorReport.
-	 *
-	 * @param reportError
-	 *            the reportError containing the information about the failure
-	 * @deprecated use {@link #addFailure(ReportError, EmbeddedBrowser)}
-	 */
-	@Deprecated
-	public void addFailure(ReportError reportError) {
-		addFailure(reportError, this.browser);
 	}
 
 	/**
@@ -790,7 +618,7 @@ public class ErrorReport implements PostCrawlingPlugin {
 	}
 
     @Override
-	public void postCrawling(CrawlSession arg0) {
+	public void postCrawling(CrawlSession session) {
 		try {
 			this.generate();
 		} catch (IOException e) {
