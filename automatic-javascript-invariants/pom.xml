@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.crawljax.plugins</groupId>
+	<artifactId>aji</artifactId>
+	<packaging>jar</packaging>
+	<version>0.1-SNAPSHOT</version>
+	<name>Automatic JavaScript Invariants</name>
+	<description>
+		Tries to find JavaScript assertions automatically.
+	</description>
+	<url>http://spci.st.ewi.tudelft.nl/crawljax/</url>
+	<inceptionYear>2009</inceptionYear>
+	<organization>
+		<name>Delft University of Technology</name>
+		<url>http://spci.st.ewi.tudelft.nl</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>frank</id>
+			<name>Frank Groeneveld</name>
+			<email>frankgroeneveld@gmail.com</email>
+			<url>http://techfield.org/</url>
+			<organization>SWERL, TU Delft</organization>
+			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>com.crawljax</groupId>
+			<artifactId>crawljax</artifactId>
+			<version>[1.8,]</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>com.crawljax.plugins</groupId>
+			<artifactId>errorreport</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>com.crawljax.plugins</groupId>
+			<artifactId>webscarabwrapper</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>mit</groupId>
+			<artifactId>daikon</artifactId>
+			<version>custom-20100427</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mozilla</groupId>
+			<artifactId>rhino</artifactId>
+			<version>20100427</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>*.js</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/resources/jar-with-dependencies.xml</descriptor>
+					</descriptors>
+					<outputDirectory>target</outputDirectory>
+					<workDirectory>target/assembly/work</workDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<tagBase>https://crawljax-plugins.googlecode.com/svn/tags</tagBase>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
