@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+		//<!CDATA[
+			jQuery(function() {
+				var html;
+				html = '<ul>';
+				jQuery('div.difference').each(function() {
+					if(html.indexOf(jQuery(this).attr('title')) < 0) {
+						html += '<li style="background: ' + jQuery(this).css('background') + ';"><input type="checkbox" checked="checked" /><span>' + jQuery(this).attr('title') + '</span></li>';
+					}
+				});
+				html += '</ul>';
+				jQuery('body').prepend(html);
+				jQuery('input[type="checkbox"]').change(function() {
+					var title = jQuery(this).parent().find('span').html();
+					var diff = jQuery('div.difference[title="' + title + '"]');
+
+					/* do a manual search because the above sometimes fails with jQuery 1.4.2.... */
+					jQuery('div.difference').each(function() {
+						if(jQuery(this).attr('title') == title) {
+							diff = jQuery(this);
+							if(diff.attr('data') == undefined || diff.attr('data') == '') {
+								diff.attr('data', diff.css('background'));
+								diff.css('background', '');
+							} else {
+								diff.css('background', diff.attr('data'));
+								diff.attr('data', '');
+							}
+						}
+					});
+				});
+			});
+		//]]>
+		</script>
+		<pre style="height: 500px; width: 550px; float: left; overflow: scroll;">
