@@ -105,9 +105,7 @@
 			<!-- TODO Whould like to have: <version>${project.version}</version> -->
       <!-- But it breaks webscarabwrapper -->
       <version>2.0-SNAPSHOT</version>
-			<classifier>binary</classifier>
 			<type>jar</type>
-			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
