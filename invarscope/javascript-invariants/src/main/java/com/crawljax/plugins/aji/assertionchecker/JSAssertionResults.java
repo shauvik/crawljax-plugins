@@ -24,10 +24,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.crawljax.browser.EmbeddedBrowser;
 import com.crawljax.core.CandidateElement;
 import com.crawljax.core.CrawlSession;
-import com.crawljax.core.plugin.PreCrawlingPlugin;
 import com.crawljax.core.plugin.PreStateCrawlingPlugin;
 import com.crawljax.plugins.errorreport.ErrorReport;
 import com.crawljax.plugins.errorreport.ReportError;
@@ -38,7 +36,7 @@ import com.crawljax.plugins.errorreport.ReportError;
  * @author Frank Groeneveld
  * @version $Id: JSAssertionResults.java 6162 2009-12-16 13:56:21Z frank $
  */
-public class JSAssertionResults implements PreStateCrawlingPlugin, PreCrawlingPlugin {
+public class JSAssertionResults implements PreStateCrawlingPlugin {
 
 	private ErrorReport errorReporter;
 	private static final Logger LOGGER = Logger.getLogger(JSAssertionResults.class);
@@ -81,10 +79,10 @@ public class JSAssertionResults implements PreStateCrawlingPlugin, PreCrawlingPl
 					 * and the line number (in that order).
 					 */
 
-//					/* add this failure to the crawl report */
-//					 errorReporter.addFailure((new ReportError("Failed JavaScript assertion(s)",
-//					 list.get(1) + " at line " + list.get(2) + ": " + list.get(0)))
-//					 .dontIncludeScreenshots());
+					/* add this failure to the crawl report */
+					 errorReporter.addFailure((new ReportError("Failed JavaScript assertion(s)",
+					 list.get(1) + " at line " + list.get(2) + ": " + list.get(0)))
+					 .dontIncludeScreenshots(), session.getBrowser());
 				}
 			}
 		} catch (Exception e) {
@@ -92,14 +90,5 @@ public class JSAssertionResults implements PreStateCrawlingPlugin, PreCrawlingPl
 		}
 
 		LOGGER.info("All done");
-	}
-
-	@Override
-	public void preCrawling(EmbeddedBrowser browser) {
-		/*
-		 * initialize errorreporter browser, because it was not available when constructing (because
-		 * of the proxy setting stuff)
-		 */
-		errorReporter.setBrowser(browser);
 	}
 }
