@@ -48,10 +48,6 @@ public final class BenchmarkExample {
 		crawler.setMaximumStates(BenchmarkExample.MAXIMUMSTATES);
 		config.setCrawlSpecification(crawler);
 
-		ThreadConfiguration tc = new ThreadConfiguration(5, 5, true);
-		tc.setUseFastBooting(true);
-		config.setThreadConfiguration(tc);
-
 		Configuration benchmakrConfig = new Configuration();
 		benchmakrConfig.setUseDataFiles(true);
 		config.addPlugin(new BenchmarkGUIPlugin(benchmakrConfig));

@@ -307,8 +307,11 @@ public class ErrorReport implements PostCrawlingPlugin {
 	public void addStateFailure(String currentDom, StateVertix originalState,
 	        List<Eventable> pathToFailure, EmbeddedBrowser browser) {
 
+		//TODO Turn on again if the build is 2.0-SNAPSHOT
+		//List<Difference> differences =
+		//        Helper.getDifferences(currentDom, originalState.getDom(), filterAttributes);
 		List<Difference> differences =
-		        Helper.getDifferences(currentDom, originalState.getDom(), filterAttributes);
+		        Helper.getDifferences(currentDom, originalState.getDom());
 		List<Highlight> highlights = new ArrayList<Highlight>();
 		for (Difference difference : differences) {
 			highlights.add(new Highlight(StringEscapeUtils.escapeHtml(difference.toString()),
@@ -423,7 +426,7 @@ public class ErrorReport implements PostCrawlingPlugin {
 		File screenShot = new File(this.screenshotsFolder, filename);
 		try {
 			browser.saveScreenShot(screenShot);
-		} catch (CrawljaxException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
