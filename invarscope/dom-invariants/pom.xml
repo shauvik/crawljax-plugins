@@ -30,6 +30,15 @@
 		</developer>
 	</developers>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.crawljax</groupId>
+			<artifactId>crawljax</artifactId>
+			<version>1.9</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<resources>
 			<resource>

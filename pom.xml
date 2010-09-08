@@ -96,13 +96,6 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.crawljax</groupId>
-			<artifactId>crawljax</artifactId>
-			<version>${parent.version}</version>
-			<type>jar</type>
-		</dependency>
-
-		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>

@@ -7,6 +7,8 @@
     <version>1.9</version>
   </parent>
   <artifactId>webscarabwrapper</artifactId>
+  <version>2.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>Extendible proxy server</name>
   <description>
 		This proxy server is extendible and allows you to modify requests and responses.
@@ -21,6 +23,13 @@
   </developers>
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.crawljax</groupId>
+      <artifactId>crawljax</artifactId>
+      <version>2.0-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
 
     <dependency>
       <groupId>bsf</groupId>

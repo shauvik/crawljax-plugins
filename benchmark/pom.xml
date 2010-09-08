@@ -2,11 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-    <groupId>com.crawljax.plugins</groupId>
-    <artifactId>crawljax-plugins-parent</artifactId>
-    <version>1.9</version>
-  </parent>
+         <groupId>com.crawljax.plugins</groupId>
+         <artifactId>crawljax-plugins-parent</artifactId>
+         <version>1.9</version>
+        </parent>
+
 	<artifactId>benchmark</artifactId>
+	<version>2.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Benchmark</name>
 	<description>
@@ -22,6 +24,14 @@
 	</developers>
 
 	<dependencies>
+
+    <dependency>
+      <groupId>com.crawljax</groupId>
+      <artifactId>crawljax</artifactId>
+      <version>2.0-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
+
 		<dependency>
 			<groupId>classmexer</groupId>
 			<artifactId>classmexer</artifactId>
