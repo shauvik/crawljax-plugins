@@ -6,6 +6,7 @@
 		<groupId>com.crawljax.plugins</groupId>
 		<artifactId>crawljax-plugins-parent</artifactId>
 		<version>1.9</version>
+                <relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>adi</artifactId>
@@ -22,7 +23,7 @@
 			<email>frankgroeneveld@gmail.com</email>
 			<url>http://techfield.org/</url>
 			<organization>SWERL, TU Delft</organization>
-			<organizationUrl>http://swerl.tudelft.nl</organizationUrl>
+			<organizationUrl>http://crawljax.com</organizationUrl>
 			<roles>
 				<role>developer</role>
 			</roles>
