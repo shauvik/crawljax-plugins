@@ -17,6 +17,7 @@ import com.crawljax.browser.EmbeddedBrowser;
 import com.crawljax.condition.invariant.Invariant;
 import com.crawljax.core.CrawlSession;
 import com.crawljax.core.CrawljaxException;
+import com.crawljax.core.plugin.OnNewStatePlugin;
 import com.crawljax.core.plugin.PostCrawlingPlugin;
 import com.crawljax.core.state.Eventable;
 import com.crawljax.core.state.StateVertix;
@@ -49,19 +50,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Creates a html report which can be used for error reporting. This report contains descriptions of
  * the failures, and can be used to inspect the failures via screenshots, dom trees, and Javascript
- * expressions.
+ * expressions. It can be used as an {@link PostCrawlingPlugin} or a {@link OnNewStatePlugin}. In
+ * the {@link OnNewStatePlugin} phase it collects screenshots of every state it sees. In the
+ * {@link PostCrawlingPlugin} phase it genereates the report.
  *
  * @author dannyroest@gmail.com (Danny Roest)
  * @author a.mesbah
  * @version $id$
  */
-public class ErrorReport implements PostCrawlingPlugin {
+public class ErrorReport implements PostCrawlingPlugin, OnNewStatePlugin {
 	private static final Logger LOGGER = Logger.getLogger(ErrorReport.class);
 
 	private static final String MAIN_HTML = "index.html";
 	private static final String MAIN_FOLDER = "errorreport/";
 	private static final String DATA_FOLDER = "data/";
 	private static final String SCREENSHOTS_FOLDER = "img/";
+	private static final String NEW_SCREENSHOTS_FOLDER = "new/";
+	private static final String ORIGIONAL_SCREENSHOTS_FOLDER = "orig/";
 	private static final String GENERAL_JS = "general.js";
 	private static final String JQUERY_JS = "jquery.js";
 	private static final String STYLE_CSS = "style.css";
@@ -73,7 +78,8 @@ public class ErrorReport implements PostCrawlingPlugin {
 
 	private final File report;
 	private final String outputFolder;
-	private final String screenshotsFolder;
+	private final String newScreenshotsFolder;
+	private final String originalScreenshotsFolder;
 	private final String statesFolder;
 
 	private final String title;
@@ -81,12 +87,16 @@ public class ErrorReport implements PostCrawlingPlugin {
 	private final Map<String, ReportErrorList> reportErrors =
 	        new HashMap<String, ReportErrorList>();
 
-	private List<String> javascriptExpressions = new ArrayList<String>();
+	private final List<String> javascriptExpressions = new ArrayList<String>();
 
 	// counter for unique id error
-	private AtomicInteger indexError = new AtomicInteger(1);
+	private final AtomicInteger indexError = new AtomicInteger(1);
 
 	private final List<String> filterAttributes;
+	
+	private final List<String> originalScreenShotsTaken = Lists.newArrayList();
+
+	private final boolean includeScreenShots;
 	
 	/**
 	 * Creates a new ErrorReport objects and created the needed folders.
@@ -121,15 +131,36 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *            the dom element attributes to exclude during generation of the Report.
 	 */
 	public ErrorReport(String title, String outputFolderName, List<String> filterAttributes) {
+		this(title, outputFolderName, filterAttributes, true);
+	}
+
+	/**
+	 * Creates a new ErrorReport objects and created the needed folders.
+	 *
+	 * @param title
+	 *            the title of the report and is also used as folder name
+	 * @param outputFolderName
+	 *            folder to use for output
+	 * @param filterAttributes
+	 *            the dom element attributes to exclude during generation of the Report.
+	 * @param includeScreenShots
+	 *            are screenshots included in this ErrorReport?
+	 */
+	public ErrorReport(String title, String outputFolderName, List<String> filterAttributes,
+	        boolean includeScreenShots) {
 		this.title = title;
 		this.filterAttributes = filterAttributes;
+		this.includeScreenShots = includeScreenShots;
 		if (outputFolderName == null) {
 			this.outputFolder = title;
 		} else {
 			this.outputFolder = Helper.addFolderSlashIfNeeded(outputFolderName) + title;
 		}
 
-		this.screenshotsFolder = outputFolder + "/" + SCREENSHOTS_FOLDER;
+		this.newScreenshotsFolder =
+		        outputFolder + "/" + SCREENSHOTS_FOLDER + NEW_SCREENSHOTS_FOLDER;
+		this.originalScreenshotsFolder =
+		        outputFolder + "/" + SCREENSHOTS_FOLDER + ORIGIONAL_SCREENSHOTS_FOLDER;
 		this.statesFolder = outputFolder + "/" + DATA_FOLDER;
 
 		this.report = new File(outputFolder + "/" + MAIN_HTML);
@@ -307,11 +338,8 @@ public class ErrorReport implements PostCrawlingPlugin {
 	public void addStateFailure(String currentDom, StateVertix originalState,
 	        List<Eventable> pathToFailure, EmbeddedBrowser browser) {
 
-		//TODO Turn on again if the build is 2.0-SNAPSHOT
-		//List<Difference> differences =
-		//        Helper.getDifferences(currentDom, originalState.getDom(), filterAttributes);
 		List<Difference> differences =
-		        Helper.getDifferences(currentDom, originalState.getDom());
+		        Helper.getDifferences(currentDom, originalState.getDom(), filterAttributes);
 		List<Highlight> highlights = new ArrayList<Highlight>();
 		for (Difference difference : differences) {
 			highlights.add(new Highlight(StringEscapeUtils.escapeHtml(difference.toString()),
@@ -346,7 +374,7 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *            ErrorReport. A toString representation of the result is shown in the report.
 	 */
 	public void setJavascriptExpressions(List<String> javascriptExpressions) {
-		this.javascriptExpressions = javascriptExpressions;
+		this.javascriptExpressions.addAll(javascriptExpressions);
 	}
 
 	/**
@@ -355,11 +383,14 @@ public class ErrorReport implements PostCrawlingPlugin {
 	 *            ErrorReport
 	 */
 	public void setJavascriptExpressions(String... javascriptExpressions) {
-		this.javascriptExpressions = Arrays.asList(javascriptExpressions);
+		this.javascriptExpressions.addAll(Arrays.asList(javascriptExpressions));
 	}
 
 	private void addReportError(ReportError error, EmbeddedBrowser browser) {
 		error.setId(indexError.getAndIncrement());
+		if (!includeScreenShots) {
+			error.dontIncludeScreenshots();
+		}
 		if (error.getCurrentDom() == null) {
 			try {
 				error = error.useDomInSteadOfBrowserDom(browser.getDom());
@@ -391,11 +422,17 @@ public class ErrorReport implements PostCrawlingPlugin {
 		try {
 	        saveJavascriptExpressions(error, browser);
 	        if (error.includeScreenshots()) {
+	        	// The "New" screenshot
 	        	List<HighlightedElement> highlightedElements =
 	        	        addHighlightsInBrowser(error.getHighlights(), browser);
-	        	makeScreenShot(error, browser);
-
+	        	makeScreenShot(browser, String.valueOf(error.getId()), this.newScreenshotsFolder);
 	        	removeHighlightedElement(highlightedElements, browser);
+	        	
+	        	if (error.hasOriginalState()) {
+					if (originalScreenShotsTaken.contains(error.getOriginalState().getName())) {
+						error.setOriginalScreenShotId(error.getOriginalState().getName());
+					}
+				}
 	        }
         } catch (CrawljaxException e) {
 	        LOGGER.error("Catched Exception when setting highlights", e);
@@ -420,15 +457,26 @@ public class ErrorReport implements PostCrawlingPlugin {
 		error.setJavascriptExpressions(evaluatedJavascriptExpressions);
 	}
 
-	private void makeScreenShot(ReportError error, EmbeddedBrowser browser) {
-
-		String filename = "screenshot" + error.getId() + ".png";
-		File screenShot = new File(this.screenshotsFolder, filename);
+	/**
+	 * Take a screenshot.
+	 *
+	 * @param browser
+	 *            the browser at which in the current state the screenshot must be taken.
+	 * @param id
+	 *            the id of the file.
+	 * @param dir
+	 *            the directory where the screenshot must be stored.
+	 * @throws CrawljaxException
+	 *             when screenshoting fails.
+	 */
+	private void makeScreenShot(EmbeddedBrowser browser, String id, String dir)
+	        throws CrawljaxException {
+		String filename = "screenshot_" + id + ".png";
+		File screenShot = new File(dir, filename);
 		try {
 			browser.saveScreenShot(screenShot);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CrawljaxException(e);
 		}
 	}
 
@@ -467,7 +515,8 @@ public class ErrorReport implements PostCrawlingPlugin {
 
 	private void generateNeededFilesAndFolders() {
 		try {
-			Helper.directoryCheck(this.screenshotsFolder);
+			Helper.directoryCheck(this.newScreenshotsFolder);
+			Helper.directoryCheck(this.originalScreenshotsFolder);
 			Helper.directoryCheck(this.statesFolder);
 
 			FileWriter out = new FileWriter(new File(outputFolder + "/" + GENERAL_JS));
@@ -627,5 +676,29 @@ public class ErrorReport implements PostCrawlingPlugin {
 		} catch (IOException e) {
 			LOGGER.error("Could not generate ErrorReport because of IOException", e);
 		}
+	}
+
+    /**
+	 * store a screenshot of the original state which is currently in the browser specified.
+	 *
+	 * @param browser
+	 *            the browser holding the state
+	 * @param state
+	 *            the state.
+	 */
+    public void storeOriginalScreenShot(EmbeddedBrowser browser, StateVertix state) {
+		try {
+			makeScreenShot(browser, state.getName(), this.originalScreenshotsFolder);
+			// Store that a state is shot.
+			originalScreenShotsTaken.add(state.getName());
+		} catch (CrawljaxException e) {
+			LOGGER.warn("Catched exception while creating ScreenShot,"
+			        + " possibly the Browser did not support it", e);
+		}
+	}
+    
+	@Override
+	public void onNewState(CrawlSession session) {
+		this.storeOriginalScreenShot(session.getBrowser(), session.getCurrentState());
 	}
 }

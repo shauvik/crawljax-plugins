@@ -49,6 +49,21 @@ public class ReportErrorReader {
 	public boolean includeScreenshots() {
 		return this.reportError.includeScreenshots();
 	}
+	
+	/**
+	 * @return the originalScreenShotId
+	 */
+	public String getOriginalScreenShotId() {
+		return this.reportError.getOriginalScreenShotId();
+	}
+
+	/**
+	 * @return whether there are screenshots taken of the original state
+	 */
+	public boolean includeOriginalScreenshots() {
+		return this.reportError.getOriginalScreenShotId() != null
+		        && !this.reportError.getOriginalScreenShotId().equals("");
+	}
 
 	/**
 	 * @return the highlights

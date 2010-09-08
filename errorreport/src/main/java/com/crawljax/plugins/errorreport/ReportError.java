@@ -37,6 +37,7 @@ public class ReportError {
 	private String currentDom;
 	private List<Eventable> pathToFailure = new ArrayList<Eventable>();
 	private List<Highlight> highlights = new ArrayList<Highlight>();
+	private String originalScreenShotId;
 
 	/**
 	 * @param typeDescription
@@ -187,4 +188,24 @@ public class ReportError {
 		return currentDom;
 	}
 
+	/**
+	 * @param name
+	 */
+	public void setOriginalScreenShotId(String name) {
+		this.originalScreenShotId = name;
+	}
+
+	/**
+	 * @return the originalScreenShotId
+	 */
+	public String getOriginalScreenShotId() {
+		return originalScreenShotId;
+	}
+	
+	/**
+	 * @return whether there are screenshots taken of the original state
+	 */
+	public boolean includeOriginalScreenshots() {
+		return originalScreenShotId != null && !originalScreenShotId.equals("");
+	}
 }

@@ -1,7 +1,7 @@
 package com.crawljax.plugins.errorreport;
 
 import com.crawljax.browser.EmbeddedBrowser;
-import com.crawljax.browser.WebDriverFirefox;
+import com.crawljax.browser.WebDriverBackedEmbeddedBrowser;
 import com.crawljax.condition.UrlCondition;
 import com.crawljax.condition.invariant.Invariant;
 import com.crawljax.core.state.Eventable;
@@ -38,10 +38,8 @@ public class TestErrorReport {
 	public void testErrorReport() throws Exception {
 
 		// setting everything up
-		//TODO switch when in 2.0-SNAPSHOT
-		//WebDriverBackedEmbeddedBrowser browser = WebDriverBackedEmbeddedBrowser
-		//		.withDriver(new FirefoxDriver());
-		EmbeddedBrowser browser = new WebDriverFirefox(new ArrayList(), 0, 0);
+		WebDriverBackedEmbeddedBrowser browser = WebDriverBackedEmbeddedBrowser
+				.withDriver(new FirefoxDriver());
 		browser.goToUrl(URL);
 		String html = browser.getDom();
 		String strippedHtml = html.replace("Accessibility", "");

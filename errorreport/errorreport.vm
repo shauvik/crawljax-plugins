@@ -18,7 +18,15 @@
 	<h3><a href="javascript:void(0)" onclick="toggleError(${error.id})">${error.description}</a></h3>
 	<div id="error${error.id}" style="display: none;" class="errorcontainer">	
 		#if($error.includeScreenshots())
-		<a href="img/screenshot${error.id}.png" target="_blank"><img class="screenshot" alt="" src="img/screenshot${error.id}.png" /></a>
+		<div class="domcontainer">
+		  <a href="img/new/screenshot_${error.id}.png" target="_blank"><img class="screenshot" alt="" src="img/new/screenshot_${error.id}.png" /></a>
+		</div>
+	   #if($error.includeOriginalScreenshots())
+		  <div class="domcontainer">
+        <a href="img/orig/screenshot_${error.getOriginalScreenShotId()}.png" target="_blank"><img class="screenshot" alt="" src="img/orig/screenshot_${error.getOriginalScreenShotId()}.png" /></a>
+      </div>
+     #end
+		<div style="clear: both;"></div>
 		#end
 		#if($error.getPathToFailure().size() > 0)
 		<h4>Path to failure:</h4>
