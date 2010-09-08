@@ -1,48 +1,49 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
     <groupId>com.crawljax.plugins</groupId>
     <artifactId>crawljax-plugins-parent</artifactId>
-    <version>1.9</version>
+    <version>${crawljaxplugins.head.version}</version>
   </parent>
 
-	<artifactId>errorreport</artifactId>
-	<name>ErrorReport</name>
- 	<version>2.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<description>
+  <version>${crawljax.head.version}</version>
+  <artifactId>errorreport</artifactId>
+  <name>ErrorReport</name>
+  <packaging>jar</packaging>
+  <description>
 		A plugin for generating error reports and visualizing the errors.
 	</description>
-	<url>http://crawljax.com</url>
-	<inceptionYear>2009</inceptionYear>
-	<developers>
-		<developer>
-			<id>danny</id>
-		</developer>
-	</developers>
+  <url>http://crawljax.com</url>
+  <inceptionYear>2009</inceptionYear>
+  <developers>
+    <developer>
+      <id>danny</id>
+    </developer>
+  </developers>
 
-	<dependencies>
+  <dependencies>
 
     <dependency>
       <groupId>com.crawljax</groupId>
       <artifactId>crawljax</artifactId>
-      <version>2.0-SNAPSHOT</version>
+      <version>${crawljax.head.version}</version>
       <type>jar</type>
     </dependency>
 
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.5</version>
-		</dependency>
-    
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium</artifactId>
-			<version>2.0a4</version>
-		</dependency>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.5</version>
+    </dependency>
 
-	</dependencies>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium</artifactId>
+      <version>2.0a4</version>
+    </dependency>
+
+  </dependencies>
 
   <build>
     <resources>
