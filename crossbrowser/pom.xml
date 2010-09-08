@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.crawljax.plugins</groupId>
+    <version>${crawljaxplugins.head.version}</version>
+    <artifactId>crawljax-plugins-parent</artifactId>
+  </parent>
+  <name>CrossBrowser</name>
+  <artifactId>crossbrowser</artifactId>
+  <description>A plugin for doing CrossBrowser crawling and comparing</description>
+  <developers>
+    <developer>
+      <id>stefan</id>
+    </developer>
+  </developers>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium</artifactId>
+      <version>2.0a4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>diff_match_patch</groupId>
+      <artifactId>diff_match_patch</artifactId>
+      <version>current</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.crawljax.plugins</groupId>
+      <artifactId>errorreport</artifactId>
+      <version>${crawljax.head.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.crawljax</groupId>
+      <artifactId>crawljax</artifactId>
+      <version>${crawljax.head.version}</version>
+      <type>jar</type>
+    </dependency>
+
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>diff_match_patch</id>
+      <url>http://google-diff-match-patch.googlecode.com/svn/trunk/maven</url>
+    </repository>
+  </repositories>
+
+</project>
