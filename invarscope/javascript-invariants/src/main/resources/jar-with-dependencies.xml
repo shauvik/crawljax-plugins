@@ -22,8 +22,8 @@
 			<outputDirectory>/lib</outputDirectory>
 			<unpack>false</unpack>
 			<includes>
-				<include>bsf:bsf</include>
-				<include>oswego:concurrent</include>
+				<include>mit:daikon</include>
+				<include>mozilla:rhino</include>
 				<include>owasp:webscarab</include>
 			</includes>
 		</dependencySet>
