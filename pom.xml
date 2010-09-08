@@ -3,7 +3,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>com.crawljax.plugins</groupId>
 	<artifactId>crawljax-plugins-parent</artifactId>
 	<version>1.9</version>
@@ -14,8 +13,8 @@
 	<url>http://crawljax-plugins.googlecode.com/</url>
 	<inceptionYear>2009</inceptionYear>
 	<organization>
-		<name>Delft University of Technology</name>
-		<url>http://spci.st.ewi.tudelft.nl</url>
+		<name>Crawljax</name>
+		<url>http://crawljax.com</url>
 	</organization>
 	<licenses>
 		<license>
@@ -96,17 +95,18 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>com.crawljax</groupId>
+			<artifactId>crawljax</artifactId>
+			<version>${parent.version}</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.crawljax</groupId>
-			<artifactId>crawljax</artifactId>
-			<version>${project.version}</version>
-			<type>jar</type>
-		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -217,6 +217,18 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/resources/jar-with-dependencies.xml</descriptor>
+          </descriptors>
+          <outputDirectory>target</outputDirectory>
+          <workDirectory>target/assembly/work</workDirectory>
+        </configuration>
       </plugin>
       
       <!-- Where to publish the plugin to? -->
