@@ -92,6 +92,7 @@
     <module>errorreport</module>
     <module>invarscope/dom-invariants</module>
     <module>invarscope/javascript-invariants</module>
+    <module>crossbrowser</module>
 	</modules>
 
   <!-- All plugins have the following dependencies -->
