@@ -9,11 +9,11 @@
                 <relativePath>../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>adi</artifactId>
+	<artifactId>invarscope-dom</artifactId>
 
 	<name>Automatic DOM Invariants</name>
 	<description>
-		Tries to find DOM invariants automatically.
+		Finds template-based DOM invariants automatically.
 	</description>
 
 	<developers>

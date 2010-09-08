@@ -6,9 +6,10 @@
 		<groupId>com.crawljax.plugins</groupId>
 		<artifactId>crawljax-plugins-parent</artifactId>
 		<version>1.9</version>
+                <relativePath>../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>aji</artifactId>
+	<artifactId>invarscope-javascript</artifactId>
 
 	<name>Automatic JavaScript Invariants</name>
 	<description>
