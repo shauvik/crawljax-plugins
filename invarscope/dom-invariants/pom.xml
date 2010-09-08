@@ -8,9 +8,8 @@
 		<version>1.9</version>
                 <relativePath>../../pom.xml</relativePath>
 	</parent>
-
+	<version>1.9-SNAPSHOT</version>
 	<artifactId>invarscope-dom</artifactId>
-
 	<name>Automatic DOM Invariants</name>
 	<description>
 		Finds template-based DOM invariants automatically.
