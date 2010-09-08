@@ -203,6 +203,15 @@
           <show>private</show>
           <nohelp>false</nohelp>
         </configuration>
+	<executions>
+          <execution>
+            <id>javadoc-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       
       <!-- When doing release generate announcement for all plugins -->
