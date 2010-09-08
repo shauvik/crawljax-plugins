@@ -18,6 +18,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This is a Wrapper around the {@link ErrorReport} class to support the needs for
@@ -30,6 +32,12 @@ public class CrossBrowserReport {
 	private static final Logger LOGGER = Logger.getLogger(CrossBrowserReport.class);
 	
 	private final ErrorReport baseReport;
+	
+	private final Map<StateVertix, Boolean> stateFailureCache =
+	        new ConcurrentHashMap<StateVertix, Boolean>();
+
+	private Map<List<Eventable>, Boolean> eventFailureCache =
+	        new ConcurrentHashMap<List<Eventable>, Boolean>();
 
 	/**
 	 * Create a new CrossBrowserReport based on a current ErrorReport.
@@ -69,11 +77,15 @@ public class CrossBrowserReport {
 			highlights.add(d.buildHighLight());
 		}
 
-		baseReport.addFailure(
-		        new ReportError("State Differences",
-		                originalState.getName() + " (" + diff.size() + ")").withPathToFailure(
-		                pathToFailure).withHighlights(highlights).includeOriginalState(
-		                originalState).useDomInSteadOfBrowserDom(currentDom), browser);
+		Boolean previous = stateFailureCache.get(originalState);
+		if (previous == null || !previous) {
+			baseReport.addFailure(
+			        new ReportError("State Differences",
+			                originalState.getName() + " (" + diff.size() + ")").withPathToFailure(
+			                pathToFailure).withHighlights(highlights).includeOriginalState(
+			                originalState).useDomInSteadOfBrowserDom(currentDom), browser);
+			stateFailureCache.put(originalState, true);
+		}
 	}
 
 	/**
@@ -91,8 +103,12 @@ public class CrossBrowserReport {
 	public void addEventFailure(
 	        Eventable eventable, List<Eventable> pathToFailure, EmbeddedBrowser browser)
 	        throws CrawljaxException {
-		baseReport.addEventFailure(
-		        eventable, eventable.getSourceStateVertix(), pathToFailure, browser);
+		Boolean previous = eventFailureCache.get(pathToFailure);
+		if (previous == null || !previous) {
+			baseReport.addEventFailure(
+			        eventable, eventable.getSourceStateVertix(), pathToFailure, browser);
+			eventFailureCache.put(pathToFailure, true);
+		}
 	}
 
 	/**

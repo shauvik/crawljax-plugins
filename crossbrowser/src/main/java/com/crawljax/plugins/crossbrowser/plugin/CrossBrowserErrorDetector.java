@@ -85,6 +85,7 @@ public class CrossBrowserErrorDetector
 		        && !DiffTextNodes.makeLine(newStripedStateList).equals(
 		                DiffTextNodes.makeLine(orrigionalStipedStateList))) {
 			// States differ
+			// TODO remove lines when new crawljax changes gets committed...
 			WebDriver driver = new Augmenter().augment(
 			        ((WebDriverBackedEmbeddedBrowser) session.getBrowser()).getBrowser());
 			report.addStateFailure(newPageSource, currentState, session.getCurrentCrawlPath(),
@@ -98,6 +99,7 @@ public class CrossBrowserErrorDetector
 		// TODO(slenselink) We miss: the browser as an argument to the
 		// onFireEventFailed call
 		try {
+			// TODO remove lines when new crawljax changes gets committed...
 			WebDriver driver = new Augmenter().augment(
 			        ((WebDriverBackedEmbeddedBrowser) session.getBrowser()).getBrowser());
 			report.addEventFailure(
