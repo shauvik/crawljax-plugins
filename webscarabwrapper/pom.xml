@@ -47,12 +47,5 @@
     <developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</developerConnection>
     <url>http://crawljax-plugins.googlecode.com/svn/trunk/webscarabwrapper</url>
   </scm>
-
-  <licenses>
-    <license>
-      <name>GPL v3</name>
-      <url>LICENSE.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+ 
 </project>

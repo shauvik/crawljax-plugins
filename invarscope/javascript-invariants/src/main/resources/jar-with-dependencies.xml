@@ -6,7 +6,6 @@
 		<fileSet>
 			<includes>
 				<include>LICENSE.txt</include>
-				<include>installJarsInMavenRepos.sh</include>
 			</includes>
 		</fileSet>
 		<fileSet>

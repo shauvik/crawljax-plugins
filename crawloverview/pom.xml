@@ -35,26 +35,7 @@
     </resources>
     <plugins>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/main/resources/jar-with-dependencies.xml</descriptor>
-          </descriptors>
-          <outputDirectory>target</outputDirectory>
-          <workDirectory>target/assembly/work</workDirectory>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.0</version>
-        <configuration>
-          <tagBase>https://crawljax-plugins.googlecode.com/svn/tags</tagBase>
-        </configuration>
-      </plugin>
+     
     </plugins>
   </build>
 </project>
