@@ -24,10 +24,11 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn</connection>
-		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn</developerConnection>
-		<url>http://crawljax-plugins.googlecode.com/svn</url>
+		<connection>scm:svn:http://crawljax-plugins.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://crawljax-plugins.googlecode.com/svn/trunk</developerConnection>
+		<url>http://crawljax-plugins.googlecode.com/svn/trunk</url>
 	</scm>
+
 	<developers>
 		<developer>
 			<id>amesbah</id>
@@ -232,7 +233,7 @@
       </plugin>
       
       <!-- Where to publish the plugin to? -->
-      <plugin>
+       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.0</version>
