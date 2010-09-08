@@ -8,10 +8,11 @@
   </parent>
 	<artifactId>errorreport</artifactId>
 	<name>ErrorReport</name>
+ 	<version>1.9-SNAPSHOT</version>
 	<description>
-		A plugin for generating error reports and visualizing the errors
+		A plugin for generating error reports and visualizing the errors.
 	</description>
-	<url>http://spci.st.ewi.tudelft.nl/crawljax/</url>
+	<url>http://crawljax.com</url>
 	<inceptionYear>2009</inceptionYear>
 	<developers>
 		<developer>
