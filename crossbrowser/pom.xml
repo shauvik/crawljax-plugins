@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.crawljax.plugins</groupId>
-    <version>${crawljaxplugins.head.version}</version>
+    <version>${1.9}</version>
     <artifactId>crawljax-plugins-parent</artifactId>
   </parent>
   <name>CrossBrowser</name>

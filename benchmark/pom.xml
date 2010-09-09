@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.crawljax.plugins</groupId>
     <artifactId>crawljax-plugins-parent</artifactId>
-    <version>${crawljaxplugins.head.version}</version>
+    <version>${1.9}</version>
   </parent>
 
   <artifactId>benchmark</artifactId>

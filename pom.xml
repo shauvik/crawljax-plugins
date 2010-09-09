@@ -5,13 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
   <properties>
     <crawljax.head.version>2.0-SNAPSHOT</crawljax.head.version>
-    <crawljaxplugins.head.version>1.9</crawljaxplugins.head.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
 	<groupId>com.crawljax.plugins</groupId>
 	<artifactId>crawljax-plugins-parent</artifactId>
-	<version>${crawljaxplugins.head.version}</version>
+	<version>1.9</version>
 	<packaging>pom</packaging>
 
 	<name>crawljax-plugins-parent</name>
