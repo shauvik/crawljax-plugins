@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>crawloverview</artifactId>
-  <version>${crawljax.head.version}</version>
+  <version>${crawljaxplugins.head.version}</version>
   <name>Crawl Overview</name>
   <description>
 		Generates a HTML report with an overview from what is crawled.

@@ -5,6 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
   <properties>
     <crawljax.head.version>2.0-SNAPSHOT</crawljax.head.version>
+    <crawljaxplugins.head.version>2.0-SNAPSHOT</crawljaxplugins.head.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 

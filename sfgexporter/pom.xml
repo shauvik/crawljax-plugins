@@ -8,7 +8,7 @@
   </parent>
 
 	<artifactId>sfgexporter</artifactId>
-	<version>${crawljax.head.version}</version>
+	<version>${crawljaxplugins.head.version}</version>
 	<packaging>jar</packaging>
 	<name>SFGExporter</name>
 	<description>

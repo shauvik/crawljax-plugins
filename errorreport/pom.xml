@@ -7,7 +7,7 @@
     <version>1.9</version>
   </parent>
 
-  <version>${crawljax.head.version}</version>
+  <version>${crawljaxplugins.head.version}</version>
   <artifactId>errorreport</artifactId>
   <name>ErrorReport</name>
   <packaging>jar</packaging>

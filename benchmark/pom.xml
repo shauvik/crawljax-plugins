@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>benchmark</artifactId>
-  <version>${crawljax.head.version}</version>
+  <version>${crawljaxplugins.head.version}</version>
   <packaging>jar</packaging>
   <name>Benchmark</name>
   <description>
