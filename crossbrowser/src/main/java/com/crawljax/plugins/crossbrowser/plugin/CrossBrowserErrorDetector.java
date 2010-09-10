@@ -36,21 +36,36 @@ import java.util.List;
 public class CrossBrowserErrorDetector
         implements OnRevisitStatePlugin, OnFireEventFailedPlugin, PostCrawlingPlugin {
 
-	private final Logger LOGGER = Logger.getLogger(CrossBrowserErrorDetector.class);
+	private static final Logger LOGGER = Logger.getLogger(CrossBrowserErrorDetector.class);
 	
 	private final CrossBrowserReport report;
 
 	// TODO(slenselink) remove the CrawlSession it's hacky
 	private CrawlSession session;
 
+	private final String startXpath;
+
 	/**
 	 * Create a new detector.
 	 *
 	 * @param report
 	 *            the instance to report error to.
+	 * @param startXpath
+	 *            the xpath expression at which the stripping & comparing of the doms trees must
+	 *            start.
+	 */
+	public CrossBrowserErrorDetector(ErrorReport report, String startXpath) {
+		this.report = new CrossBrowserReport(report);
+		this.startXpath = startXpath;
+	}
+
+	/**
+	 *
+	 *@param report
+	 *            the instance to report error to.
 	 */
 	public CrossBrowserErrorDetector(ErrorReport report) {
-		this.report = new CrossBrowserReport(report);
+		this(report, null);
 	}
 
 	@Override
@@ -65,7 +80,8 @@ public class CrossBrowserErrorDetector
 		sc.compare(currentDom, currentDom, null);
 		currentDom = sc.getStrippedNewDom();
 
-		List<TextNode> orrigionalStipedStateList = TextNodeLoader.stripDom(currentDom);
+		List<TextNode> orrigionalStipedStateList =
+		        TextNodeLoader.stripDom(currentDom, startXpath);
 
 		String newPageSource = "";
 		try {
@@ -79,7 +95,7 @@ public class CrossBrowserErrorDetector
 		sc.compare(newPageSource, newPageSource, null);
 		newPageSource = sc.getStrippedNewDom();
 		
-		List<TextNode> newStripedStateList = TextNodeLoader.stripDom(newPageSource);
+		List<TextNode> newStripedStateList = TextNodeLoader.stripDom(newPageSource, startXpath);
 
 		if (!DiffTextNodes.makeLine(orrigionalStipedStateList).equals("")
 		        && !DiffTextNodes.makeLine(newStripedStateList).equals(

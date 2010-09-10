@@ -8,6 +8,7 @@ import com.crawljax.util.Helper;
 import com.crawljax.util.XPathHelper;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -45,23 +46,29 @@ public final class TextNodeLoader {
 	 *
 	 * @param dom
 	 *            the dom to parse
+	 * @param startXpath
+	 *            the xPath at which the stripping must start.
 	 * @return the list of bare-text.
 	 */
-	public static List<TextNode> stripDom(String dom) {
+	public static List<TextNode> stripDom(String dom, String startXpath) {
 		List<TextNode> result = Lists.newArrayList();
-
-		Document doc;
+		
 		try {
-			doc = Helper.getDocument(dom);
-			XPathFactory factory = XPathFactory.newInstance();
-			XPath xpath = factory.newXPath();
 			Object resultObject;
-			try {
-				XPathExpression expr = xpath.compile("//*[@id='content']");
-				resultObject = expr.evaluate(doc, XPathConstants.NODESET);
-			} catch (XPathExpressionException e) {
-				return result;
+			Document doc = Helper.getDocument(dom);
+			if (startXpath != null && !startXpath.equals("")) {
+				try {
+					XPathFactory factory = XPathFactory.newInstance();
+					XPath xpath = factory.newXPath();
+					XPathExpression expr = xpath.compile(startXpath);
+					resultObject = expr.evaluate(doc, XPathConstants.NODESET);
+				} catch (XPathExpressionException e) {
+					return result;
+				}
+			} else {
+				resultObject = doc.getChildNodes();
 			}
+			
 			if (resultObject instanceof NodeList) {
 				NodeList nodes = (NodeList) resultObject;
 				if (nodes.getLength() > 0) {
@@ -93,6 +100,19 @@ public final class TextNodeLoader {
 			return Lists.newArrayList(
 			        new TextNode(s, XPathHelper.getXPathExpression(n.getParentNode())));
 		} else {
+			if (n.hasAttributes()) {
+				// Check if one of the attributes defines 'hidden'
+				NamedNodeMap attr = n.getAttributes();
+				Node styleNode = attr.getNamedItem("style");
+				if (styleNode != null) {
+					String line = styleNode.getNodeValue();
+					line = line.trim().toLowerCase().replaceAll(" ", "");
+					if (line.contains("display:none")) {
+						// Stop processing further as every node under here will be hidden.
+						return Lists.newArrayList();
+					}
+				}
+			}
 			NodeList nl = n.getChildNodes();
 			List<TextNode> result = Lists.newArrayList();
 			for (int i = 0; i < nl.getLength(); i++) {
