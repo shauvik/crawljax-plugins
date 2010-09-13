@@ -4,7 +4,6 @@ package com.crawljax.plugins.crossbrowser.plugin;
 
 import com.google.common.collect.Lists;
 
-import com.crawljax.browser.WebDriverBackedEmbeddedBrowser;
 import com.crawljax.core.CrawlSession;
 import com.crawljax.core.CrawljaxException;
 import com.crawljax.core.plugin.OnFireEventFailedPlugin;
@@ -22,8 +21,6 @@ import com.crawljax.plugins.crossbrowser.statecompare.TextNodeLoader;
 import com.crawljax.plugins.errorreport.ErrorReport;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.Augmenter;
 
 import java.util.List;
 
@@ -101,12 +98,8 @@ public class CrossBrowserErrorDetector
 		        && !DiffTextNodes.makeLine(newStripedStateList).equals(
 		                DiffTextNodes.makeLine(orrigionalStipedStateList))) {
 			// States differ
-			// TODO remove lines when new crawljax changes gets committed...
-			WebDriver driver = new Augmenter().augment(
-			        ((WebDriverBackedEmbeddedBrowser) session.getBrowser()).getBrowser());
 			report.addStateFailure(newPageSource, currentState, session.getCurrentCrawlPath(),
-			        WebDriverBackedEmbeddedBrowser.withDriver(driver), orrigionalStipedStateList,
-			        newStripedStateList);
+			        session.getBrowser(), orrigionalStipedStateList, newStripedStateList);
 		}
 	}
 
@@ -115,11 +108,7 @@ public class CrossBrowserErrorDetector
 		// TODO(slenselink) We miss: the browser as an argument to the
 		// onFireEventFailed call
 		try {
-			// TODO remove lines when new crawljax changes gets committed...
-			WebDriver driver = new Augmenter().augment(
-			        ((WebDriverBackedEmbeddedBrowser) session.getBrowser()).getBrowser());
-			report.addEventFailure(
-			        eventable, pathToFailure, WebDriverBackedEmbeddedBrowser.withDriver(driver));
+			report.addEventFailure(eventable, pathToFailure, session.getBrowser());
 		} catch (CrawljaxException e) {
 			LOGGER.warn("Received CrawljaxException while adding EventFailure", e);
 			return;
