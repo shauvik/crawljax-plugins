@@ -5,7 +5,6 @@ package com.crawljax.plugins.crossbrowser.core;
 import com.crawljax.browser.EmbeddedBrowser;
 import com.crawljax.core.CrawlSession;
 import com.crawljax.core.CrawljaxController;
-import com.crawljax.core.CrawljaxException;
 import com.crawljax.core.configuration.CrawljaxConfiguration;
 import com.crawljax.core.plugin.CrawljaxPluginsUtil;
 import com.crawljax.core.state.Eventable;
@@ -63,26 +62,14 @@ public class CrossBrowserController extends CrawljaxController {
       LOGGER.error("The request for a browser was interuped", e);
     }
 
-    /**
-     * Go to the initial URL
-     */
-    try {
-      browser.goToUrl(this.getConfigurationReader().getCrawlSpecificationReader().getSiteUrl());
-      doBrowserWait(browser);
-    } catch (CrawljaxException e) {
-      LOGGER.fatal("Failed to load the site: " + e.getMessage(), e);
-    }
+    browser.goToUrl(this.getConfigurationReader().getCrawlSpecificationReader().getSiteUrl());
+    doBrowserWait(browser);
 
     /**
      * Build the index state
      */
-    StateVertix indexState = null;
-    try {
-      indexState = new StateVertix(
-          browser.getCurrentUrl(), "index", browser.getDom(), getStrippedDom(browser));
-    } catch (CrawljaxException e) {
-      LOGGER.error("Can not build the index state due to a CrawljaxException", e);
-    }
+    StateVertix indexState = new StateVertix(
+		        browser.getCurrentUrl(), "index", browser.getDom(), getStrippedDom(browser));
 
     /**
      * Build the CrawlSession

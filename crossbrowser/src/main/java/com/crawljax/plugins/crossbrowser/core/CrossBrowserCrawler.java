@@ -33,7 +33,12 @@ public class CrossBrowserCrawler extends Crawler {
 	@Override
 	public void run() {
 		// Get Browser, Go to index & backtrack
-		init();
+		try {
+			init();
+		} catch (InterruptedException e) {
+			// The Crawler was interrupted during initialization stopping the crawling immediately.
+			return;
+		}
 
 		// Release the browser to be used by other Crawlers
 		shutdown();

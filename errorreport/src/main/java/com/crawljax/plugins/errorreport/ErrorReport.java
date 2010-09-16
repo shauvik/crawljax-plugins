@@ -301,11 +301,7 @@ public class ErrorReport implements PostCrawlingPlugin, OnNewStatePlugin {
 	 *            the browser used
 	 */
 	public void addStateFailure(StateVertix originalState, EmbeddedBrowser browser) {
-		try {
-			addStateFailure(browser.getDom(), originalState, browser);
-		} catch (CrawljaxException e) {
-			LOGGER.error("Unable to retrieve DOM from Browser", e);
-		}
+		addStateFailure(browser.getDom(), originalState, browser);
 	}
 
 	/**
@@ -392,11 +388,7 @@ public class ErrorReport implements PostCrawlingPlugin, OnNewStatePlugin {
 			error.dontIncludeScreenshots();
 		}
 		if (error.getCurrentDom() == null) {
-			try {
-				error = error.useDomInSteadOfBrowserDom(browser.getDom());
-			} catch (CrawljaxException e) {
-				LOGGER.error("Unable to retrieve DOM from Browser", e);
-			}
+			error = error.useDomInSteadOfBrowserDom(browser.getDom());
 		}
 		// TODO Stefan; REFACTOR!! This looks so ugly it must contain bugs ;)
 		if (!reportErrors.containsKey(error.getTypeDescription())) {

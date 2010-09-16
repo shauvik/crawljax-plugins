@@ -80,13 +80,7 @@ public class CrossBrowserErrorDetector
 		List<TextNode> orrigionalStipedStateList =
 		        TextNodeLoader.stripDom(currentDom, startXpath);
 
-		String newPageSource = "";
-		try {
-			newPageSource = session.getBrowser().getDom();
-		} catch (CrawljaxException e) {
-			LOGGER.warn("Received CrawljaxException while getting DOM from browser", e);
-			return;
-		}
+		String newPageSource = session.getBrowser().getDom();
 		
 		// Strip out Date
 		sc.compare(newPageSource, newPageSource, null);
