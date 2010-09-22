@@ -225,16 +225,29 @@
         </executions>
       </plugin>
 
+      <!-- Create PLUGIN_NAME-x.y-z-binary.jar -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptors>
-            <descriptor>src/main/resources/jar-with-dependencies.xml</descriptor>
+            <descriptor>
+              binary-jar-without-dependencies.xml
+            </descriptor>
           </descriptors>
-          <outputDirectory>target</outputDirectory>
-          <workDirectory>target/assembly/work</workDirectory>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
         </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       
       <!-- Where to publish the plugin to? -->

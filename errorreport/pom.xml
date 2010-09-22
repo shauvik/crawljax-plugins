@@ -53,6 +53,7 @@
           <include>*.vm</include>
           <include>*.js</include>
           <include>*.css</include>
+          <include>LICENSE.txt</include>
         </includes>
       </resource>
     </resources>
