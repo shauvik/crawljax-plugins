@@ -21,5 +21,13 @@
                                 <include>LICENSE.txt</include>
                         </includes>
                 </fileSet>
+                <fileSet>
+                        <includes>
+                            <include>*.js</include>
+                            <include>*.vm</include>
+                            <include>*.css</include>
+                            <include>*.html</include>
+                        </includes>
+                </fileSet>
         </fileSets>
 </assembly>
